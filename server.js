@@ -1,7 +1,18 @@
-const app =require('./app');
+const { default: mongoose } = require("mongoose");
+const app = require("./app");
+const config = require("./app/config");
 
-const PORT = process.env.PORT || 8080;
+mongoose.connect(config.db.uri)
+.then(()=>{
+    console.log("Connected to the db!");
+})
+.catch((error)=>{
+    console.log(error);
+    process.exit();
+});
 
-app.listen(PORT, () =>{
-    console.log(`Server is runging on port ${PORT}`);
+
+const PORT =config.app.port;
+app.listen(PORT, ()=>{
+    console.log(`server is runging on port ${PORT}..`);
 });
